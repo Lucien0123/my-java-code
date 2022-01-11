@@ -1,6 +1,5 @@
-package com.lucien.javacode.单例模式;
+package com.lucien.myjavacode.单例模式;
 
-import sun.jvm.hotspot.debugger.cdbg.basic.LazyBlockSym;
 
 /**
  * Created by lucien on 2018/2/23.

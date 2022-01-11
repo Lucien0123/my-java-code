@@ -1,7 +1,6 @@
 package com.lucien.myjavacode.文件按行读取;
 
 import com.sun.management.OperatingSystemMXBean;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.lang.management.ManagementFactory;
@@ -11,6 +10,8 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @Author huoershuai
