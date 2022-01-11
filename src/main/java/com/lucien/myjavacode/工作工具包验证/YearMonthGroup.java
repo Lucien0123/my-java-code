@@ -1,23 +1,18 @@
-package com.lucien.myjavacode;
+package com.lucien.myjavacode.工作工具包验证;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.joda.time.DateTime;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 
 /**
+ * 年月分组
  * @author huoershuai
  * Created on 2020-07-17
  */
-public class Main2 {
+public class YearMonthGroup {
 
     public static void main(String[] args) {
 
