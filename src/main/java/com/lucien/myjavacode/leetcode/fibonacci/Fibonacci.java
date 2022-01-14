@@ -12,7 +12,7 @@ public class Fibonacci {
     }
 
     /**
-     * 递归 k^n
+     * 递归 k^n【最差的性能】
      */
     public static int fibRecursion(int n) {
         if (n < 2) {
