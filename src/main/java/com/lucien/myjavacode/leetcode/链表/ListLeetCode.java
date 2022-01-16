@@ -1,5 +1,6 @@
 package com.lucien.myjavacode.leetcode.链表;
 
+
 /**
  * 链表得操作
  * @author huoershuai
@@ -20,6 +21,36 @@ public class ListLeetCode {
         String aa = "123 12";
         System.out.println(Character.isSpaceChar(aa.charAt(1)));
 
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode head = null;
+        ListNode tail = null;
+        int carry = 0;
+        // 遍历两个链表，每位相加
+        while (l1 != null || l2 != null) {
+            int val1 = l1 != null ? l1.val : 0;
+            int val2 = l2 != null ? l2.val : 0;
+            int sum = val1 + val2 + carry;
+            if (head == null) {
+                head = new ListNode(sum % 10);
+                tail = head;
+            } else {
+                tail.next = new ListNode(sum % 10);
+                tail = tail.next;
+            }
+            carry = sum / 10;
+            if (l1 != null) {
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                l2 = l2.next;
+            }
+        }
+        if (carry > 0) {
+            tail.next = new ListNode(carry);
+        }
+        return tail;
     }
 
     /**
