@@ -1,12 +1,11 @@
 package com.lucien.myjavacode.根据日期拆表;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.joda.time.DateTime;
 
-import javafx.util.Pair;
 
 /**
  * @author huoershuai
@@ -30,7 +29,7 @@ public class SplitByTablesByTime {
             long tmpMod =
                     (new DateTime(startTime).getDayOfYear() / 10 + 1) % 5;
             if (tmpMod != mod || startTime + 24 * 60 * 60 * 1000L == endTime) {
-                result.add(new Pair<>(monthDay(tmpStart), monthDay(startTime)));
+                result.add(Pair.of(monthDay(tmpStart), monthDay(startTime)));
                 tmpStart = startTime;
                 mod = tmpMod;
             }

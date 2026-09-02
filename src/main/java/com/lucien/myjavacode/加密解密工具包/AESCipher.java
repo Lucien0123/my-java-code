@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.UUID;
 
 import javax.crypto.BadPaddingException;
@@ -16,8 +17,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 
 /**
@@ -36,7 +35,7 @@ public class AESCipher {
 			byte[] contentBytes = content.getBytes(charset);
 			byte[] keyBytes = key.getBytes(charset);
 			byte[] encryptedBytes = aesEncryptBytes(contentBytes, keyBytes);
-			return Base64.encode(encryptedBytes);
+			return Base64.getEncoder().encodeToString(encryptedBytes);
 		} catch (Exception e) {
 			System.out.println(content+"内容加密出错："+e.getMessage());
 		}
@@ -46,7 +45,7 @@ public class AESCipher {
 	public static String aesDecryptString(String content, String key){
 		//Decoder decoder = Base64.getDecoder();
 	    try {
-			byte[] encryptedBytes = Base64.decode(content);
+			byte[] encryptedBytes = Base64.getDecoder().decode(content);
 			byte[] keyBytes = key.getBytes(charset);
 			byte[] decryptedBytes = aesDecryptBytes(encryptedBytes, keyBytes);
 			return new String(decryptedBytes, charset);
