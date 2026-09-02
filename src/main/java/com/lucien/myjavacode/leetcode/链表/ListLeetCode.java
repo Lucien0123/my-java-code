@@ -54,29 +54,64 @@ public class ListLeetCode {
     }
 
     /**
-     * 通过快慢指针找到环的点
-     * 一次循环，找到相交的点
-     *   二层循环，同步调找到相交的点
+     * 使用 Floyd 判环算法（龟兔赛跑算法）检测链表中环的入口节点。
      *
-     * 2(l + p) = l + p + k * r
-     * l + p = k * r
-     * l = (k-1) * r + (r-p)
-     * 含义：从head走到st 等于 从meet走到st然后再绕k-1圈
-     * */
-    public static ListNode deleteCycle(ListNode head) {
+     * 算法分为两个阶段：
+     *
+     * 阶段一：判断是否有环，并找到快慢指针的相遇点。
+     *   - slow 指针每次走 1 步，fast 指针每次走 2 步。
+     *   - 如果链表无环，fast 会先到达末尾（fast == null 或 fast.next == null）。
+     *   - 如果链表有环，fast 一定会追上 slow，两指针在环内某点相遇。
+     *     原因：进入环后，fast 相对 slow 的速度是 1 步/轮，迟早会套圈相遇。
+     *
+     * 阶段二：根据相遇点定位环的入口节点。
+     *   设：
+     *     l  = 从 head 到环入口 start 的步数
+     *     p  = 从环入口 start 到相遇点 meet 的步数
+     *     r  = 环的长度（周长）
+     *
+     *   当 slow 与 fast 第一次相遇时：
+     *     slow 走过的路程：l + p
+     *     fast 走过的路程：2(l + p)   （速度是 slow 的 2 倍）
+     *
+     *   fast 比 slow 多走了整数圈：
+     *     2(l + p) - (l + p) = k * r   （k 为某个正整数，表示 fast 多绕的圈数）
+     *     => l + p = k * r
+     *     => l = k * r - p
+     *     => l = (k - 1) * r + (r - p)
+     *
+     *   公式含义：
+     *     从 head 出发走 l 步到达环入口，
+     *     等价于从相遇点 meet 出发，绕环 (k-1) 圈后再走 (r-p) 步也到达环入口。
+     *
+     *   因此：
+     *     让 ptr 从 head 出发，slow 从 meet 出发，两个指针每次都只走 1 步。
+     *     当 ptr 走了 l 步到达环入口时，slow 也刚好走了 l 步，
+     *     即 slow 绕了 (k-1) 圈并走了 (r-p) 步，同样回到环入口。
+     *     两指针相遇的位置就是环的入口节点。
+     *
+     * 时间复杂度：O(n)，空间复杂度：O(1)
+     *
+     * @param head 链表头节点
+     * @return 环的入口节点；如果链表无环，返回 null
+     */
+    public static ListNode detectCycle(ListNode head) {
         if (head == null) {
             return null;
         }
-        ListNode solw = head;
+        ListNode slow = head;
         ListNode fast = head;
+
+        // 阶段一：快慢指针找相遇点
         while (fast != null && fast.next != null) {
-            solw = solw.next;
+            slow = slow.next;
             fast = fast.next.next;
-            if (solw == fast) { // 找到了meet的点
+            if (slow == fast) {
+                // 阶段二：ptr 从 head 出发，slow 从相遇点出发，同步前进找环入口
                 ListNode ptr = head;
-                while (head != solw) {
-                    head = head.next;
-                    solw = solw.next;
+                while (ptr != slow) {
+                    ptr = ptr.next;
+                    slow = slow.next;
                 }
                 return ptr;
             }
